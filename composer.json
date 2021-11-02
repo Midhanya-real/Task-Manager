@@ -1,0 +1,12 @@
+{
+    "name": "mihan/task-manager_v2",
+    "require": {
+        "ext-readline": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "Routes\\": "routes/"
+        }
+    }
+}
