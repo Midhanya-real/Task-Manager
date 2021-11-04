@@ -2,7 +2,7 @@
 
 namespace App\Views\Response;
 
-use App\Services\FormatService;
+use App\Services\RecordFormatService;
 
 class TaskResponseView
 {
@@ -10,7 +10,7 @@ class TaskResponseView
     {
         if ($showData) {
             foreach ($showData as $record) {
-                FormatService::createOutPattern($record);
+                RecordFormatService::createOutPattern($record);
             }
 
             return true;

@@ -18,14 +18,13 @@ class UserResponseView
 
     }
 
-    public static function auth(array|bool $authUser): bool
+    public function auth(bool $authUser): bool
     {
         if (!$authUser) {
             print_r('Неверно введен логин или пароль. Проверьте введенные данные и попытайтесь снова' . "\n");
             return false;
         }
 
-        User::setAuth($authUser);
         print_r('Добро пожаловать в клуб' . "\n");
 
         return true;

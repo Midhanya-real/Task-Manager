@@ -6,13 +6,26 @@ use App\Controllers\ExitController;
 use App\Controllers\TaskController;
 use App\Controllers\UserController;
 use Exception;
-use JetBrains\PhpStorm\NoReturn;
 
-/**
- *
- */
+
 class Router
 {
+    private static array $instance = [];
+
+    /**
+     * @return static
+     */
+    public static function getInstance(): static
+    {
+        $class = static::class;
+
+        if (!isset(self::$instance[$class])) {
+            self::$instance[$class] = new static();
+        }
+
+        return self::$instance[$class];
+    }
+
     /**
      * @param string $command
      * @return bool
@@ -35,7 +48,7 @@ class Router
      */
     protected static function register(): bool
     {
-        return (new UserController)->register();
+        return (new UserController())->register();
     }
 
     /**
@@ -43,7 +56,7 @@ class Router
      */
     protected static function auth(): bool
     {
-        return (new UserController)->authorization();
+        return (new UserController())->authorization();
     }
 
     /**
@@ -82,7 +95,7 @@ class Router
         return (new TaskController())->get();
     }
 
-    #[NoReturn]
+
     protected static function exit(): void
     {
         (new ExitController())->exitAndClear();

@@ -5,10 +5,11 @@ use JetBrains\PhpStorm\ArrayShape;
 
 class UserRequestView
 {
+
     /**
      * @return array
      */
-    #[ArrayShape(['login' => "string", 'password' => "string"])]
+
     public static function userDataCollect(): array
     {
         echo 'Введите логин: ';

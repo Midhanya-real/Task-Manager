@@ -6,15 +6,12 @@ use App\Services\UserService;
 use App\Views\Request\UserRequestView;
 use App\Views\Response\UserResponseView;
 use Exception;
-use JetBrains\PhpStorm\Pure;
 
 class UserController
 {
-
     private UserRequestView $requestView;
     private UserResponseView $responseView;
 
-    #[Pure]
     public function __construct()
     {
         $this->requestView = new UserRequestView();

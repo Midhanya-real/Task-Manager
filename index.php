@@ -7,10 +7,12 @@ use Routes\Router;
 
 FileService::checkFiles();
 
+$router = Router::getInstance();
+
 while (true) {
-    echo memory_get_usage() . "\n";
     $command = readline();
 
-    (new Router())->run($command);
-    echo memory_get_usage() . "\n";
+    $router->run($command);
 }
+
+

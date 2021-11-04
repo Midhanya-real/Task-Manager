@@ -4,13 +4,11 @@ namespace App\Services;
 
 use App\Models\User;
 use Exception;
-use JetBrains\PhpStorm\Pure;
 
 class UserService
 {
     private User $user;
 
-    #[Pure]
     public function __construct
     (
         protected string $login,
@@ -30,12 +28,14 @@ class UserService
         $userData = [$this->login, $this->password];
         $hasUser = false;
 
-        if (FormatService::isFull($userData)) {
+        if (RecordFormatService::isFull($userData)) {
             $hasUser = FileService::hasUser(data: $userData, path: $this->user->access());
         }
 
         if ($hasUser) {
-            return FormatService::setPattern(data: $hasUser, pattern: $this->user->fields());
+            $user = RecordFormatService::setAssocFormat(data: $hasUser, pattern: $this->user->fields());
+            $this->user->setAuth($user);
+            return true;
         }
 
         return false;
@@ -49,7 +49,7 @@ class UserService
         $userData = [$this->login, $this->password, $this->status];
         $hasUser = true;
 
-        if (FormatService::isFull($userData)) {
+        if (RecordFormatService::isFull($userData)) {
             $hasUser = FileService::hasUser(data: $userData, path: $this->user->access());
         }
 

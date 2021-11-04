@@ -11,18 +11,16 @@ class TaskRequestView
      * @throws Exception
      */
     private array $authStatus;
-    private bool $isAdmin;
 
     public function __construct()
     {
-        $this->authStatus = User::isAuth();
-        $this->isAdmin = User::isAdmin();
+        $this->authStatus = (new User())->isAuth();
     }
 
     /**
      * @return array|false
      */
-    public function postDataCollection(): array|false
+    public function postDataCollection(): array|bool
     {
         if ($this->authStatus) {
             echo 'введите заголовок: ';
@@ -39,7 +37,7 @@ class TaskRequestView
 
             $person = $this->authStatus['login'];
 
-            if ($this->isAdmin) {
+            if ($this->authStatus['status'] == 'a') {
                 echo 'Введите исполняемое лицо: ';
                 $person = readline();
 
@@ -65,7 +63,7 @@ class TaskRequestView
 
             $changeData = ['id' => $id, 'status' => $status, 'login' => $this->authStatus['login'], 'access' => $this->authStatus['status']];
 
-            if ($this->isAdmin) {
+            if ($this->authStatus['status'] == 'a') {
                 echo 'Введите исполняемое лицо: ';
                 $person = readline();
 
@@ -93,7 +91,7 @@ class TaskRequestView
         return false;
     }
 
-    public function getDataCollection(): bool|array
+    public function getDataCollection(): array|bool
     {
         if ($this->authStatus) {
             return ['login' => $this->authStatus['login'], 'access' => $this->authStatus['status']];
